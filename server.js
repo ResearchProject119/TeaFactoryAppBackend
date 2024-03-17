@@ -5,6 +5,9 @@ const cors = require("cors");
 const path = require("path");
 const app = express();
 
+//Routes
+var appController = require("./app");
+
 // Loading environment variables
 require("dotenv").config({
 	path: path.resolve(__dirname, ".env"),
@@ -30,6 +33,8 @@ const connection = mongoose.connection;
 connection.once("open", () => {
 	console.log("MongoDB connection successful!");
 });
+// use routes (if applicable) appController
+app.use("/api", appController);
 
 // Start the server
 app.listen(PORT, () => {
