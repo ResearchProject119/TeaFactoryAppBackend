@@ -50,8 +50,6 @@ module.exports.viewAllTroughs = async (req, res) => {
 
 module.exports.updateTroughDetails = async (req) => {
     try{
-        let tid = req._id;
-        let idString = tid.toString();
         const {
             troughID,
             capacity,
@@ -59,12 +57,11 @@ module.exports.updateTroughDetails = async (req) => {
         } = req;
 
         const updateTrough = {
-            troughID,
             capacity,
             status,
         };
-        let response = await Trough.findByIdAndUpdate(
-            {_id : idString},
+        let response = await Trough.findOneAndUpdate(
+            {troughID : troughID},
             updateTrough,
         );
         if (response) {
@@ -86,10 +83,9 @@ module.exports.updateTroughDetails = async (req) => {
 
 module.exports.deleteTroughService = async (req , res) => {
     try{
-        let tid = req._id;
-        let idString = tid.toString();
+        let tid = req.troughID;
 
-        let response = await Trough.findByIdAndDelete(idString);
+        let response = await Trough.findOneAndDelete(tid);
 
         if (response) {
 			return {
@@ -110,10 +106,9 @@ module.exports.deleteTroughService = async (req , res) => {
 
 module.exports.singleViewTroughService = async(req) => {
     try{
-        let tid = req._id;
-        let idString = tid.toString();
+        let tid = req.troughID;
 
-        let response = await Trough.findOne({_id: idString});
+        let response = await Trough.findOne({troughID: tid});
 
         if (response) {
 			return {
