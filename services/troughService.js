@@ -1,4 +1,5 @@
 const Trough = require('../models/Trough');
+const axios = require('axios');
 
 //add new trough service
 
@@ -124,5 +125,39 @@ module.exports.singleViewTroughService = async(req) => {
     }
     catch (err) {
         throw err;
+    }
+};
+
+module.exports.predict = async (req) => {
+    try {
+        console.log(req)
+        // Make the POST request to the prediction endpoint
+        const response = await axios.post('https://tealeaves-prediction.onrender.com/timeserieswithexog', {
+            date: req.date,
+            rainfall: req.rainfall,
+            holiday: req.holiday
+        });
+      
+        console.log("data",response )
+        // Check if the response is successful
+        if (response.status === 200) {
+            console.log("data",response.data.message);
+            const responseArray = JSON.parse(response.data.message);
+            
+            // console.log(responseArray[4]);
+            return {
+                msg: "success",
+                data: responseArray
+            };
+        } else {
+            return {
+                msg: "fail",
+                data: null
+            };
+        }
+    } catch (err) {
+        // Handle any errors
+        console.error('Error predicting:', err.message);
+        throw err; // Rethrow the error to propagate it to the caller
     }
 };

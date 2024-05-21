@@ -117,3 +117,24 @@ module.exports.singleTroughViewController = async (req, res) => {
         });
     }
 };
+
+module.exports.predict = async (req, res) => {
+    try{
+        let routeResponse = await troughService.predict(req.body);
+        return res.status(200).json({
+            success: true,
+            data: routeResponse.data,
+            showMessage: false,
+        });
+    }
+    catch{
+        return res.status(
+            err.status || ResponseStatusCodes.INTERNAL_SERVER_ERROR,
+        )
+        .json({
+            success: false,
+            msg: err.msg || 
+                ResponseCommonMessages.INTERNAL_SERVER_ERROR,
+        });
+    }
+};

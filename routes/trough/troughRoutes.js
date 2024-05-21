@@ -39,4 +39,10 @@ module.exports = function(router){
         jsonParser,
         troughController.singleTroughViewController,
     )
+    // View one trough
+    router.post(
+        "/predict",
+        jsonParser,
+        troughController.predict,
+    )
 };
