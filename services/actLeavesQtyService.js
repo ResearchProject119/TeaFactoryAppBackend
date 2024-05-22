@@ -111,7 +111,7 @@ module.exports.deleteActLeavesQtyService = async (req , res) => {
 module.exports.singleViewActLeavesQtyService = async(req) => {
     try{
         let leDate = req.date;
-
+        
         let response = await ActLeavesQty.findOne({date: leDate});
 
         if (response) {

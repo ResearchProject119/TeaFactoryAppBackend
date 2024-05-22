@@ -34,7 +34,7 @@ module.exports = function(router){
     ); 
 
     // View one actual-leaves-details
-    router.get(
+    router.post(
         "/view/single-actual-leaves-details",
         jsonParser,
         actLeavesQtyController.singleViewactLeavesQtyController,
